@@ -10,18 +10,14 @@ socket.on('disconnect', () => {
 
 socket.on('newMessage', (message) => {
     console.log('New message: ', message);
+    var formattedTime = moment(message.createdAt).format('h:mm a');
     var li = jQuery('<li></li>');
-    li.text(`${message.from}: ${message.text} `);
+    li.text(`${message.from} ${formattedTime}: ${message.text}`);
 
     jQuery('#messages').append(li);
 });
 
-socket.emit('createMessage', {
-    from: 'Jack',
-    text: 'Bitch !'
-}, (data) => {
-    console.log('Got it', data);
-});
+
 
 jQuery('#message-form').on('submit', (e) => {
     e.preventDefault();
